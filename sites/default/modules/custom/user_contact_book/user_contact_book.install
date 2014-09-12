@@ -1,0 +1,119 @@
+<?php
+
+/**
+ * implements Hook_schema();
+ */
+function user_contact_book_schema() {
+  $schema['user_contact'] = array(
+    'description' => t('User Contact table'),
+    'fields'      => array(
+      'cid'        => array(
+        'type'        => 'serial',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'description' => t('Contact identifier.'),
+      ),
+      'type' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'normal',
+        'description' => t('Contact Type tid from Contact Category taxonomy'),
+      ),	
+      'first_name' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => t('First Name of Contact.'),
+      ),
+      'last_name' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => t('Last Name of Contact.'),
+      ),
+      'email' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => t('Email ID of Contact : set when channel type is Email.'),
+      ),
+      'mobile' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => t('Mobile No. of Contact.'),
+      ),	  
+      'phone' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => t('Phone(landline) of Contact.'),
+      ),
+      'terms_and_cond' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'tiny',
+        'description' => t('Contacts terms and condition and above 0 - not accepted, 1 - accepted'),
+      ),
+      'uid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => t('User ID for which contact is mapped.'),
+      ),	  
+      'bundle'     => array(
+        'description' => 'Entity bundle name.',
+        'type'        => 'varchar',
+        'length'      => 255,
+      ),
+    ),
+    'primary key' => array('cid'),
+  );  
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install()
+ *
+ * Create if no exits fields and taxonomy vocabularies
+ */
+function user_contact_book_install() {
+  /**
+   * Create vocabulary for category
+   */
+  if (!taxonomy_vocabulary_machine_name_load('contact_categories')) {
+    $voc        = array(
+      'name'         => 'Contact categories',
+      'machine_name' => 'contact_categories',
+      'description'  => t('Contact categories list.'),
+      'module'       => 'taxonomy',
+    );
+    $vocabulary = (object) $voc;
+    taxonomy_vocabulary_save($vocabulary);
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function user_contact_book_update_7001() {
+  // Adding new column for toring isi checkmark from user.
+  $created_spec = array(	  
+      'type' => 'int',
+      'not null' => TRUE,
+      'default' => 0,      
+	  'description' => t('The unix timestamp when the course was created.'),
+	  );
+  $changed_spec = array(	  
+      'type' => 'int',
+      'not null' => TRUE,
+      'default' => 0,      
+	  'description' => t('The unix timestamp when the course was most recently updated.'),
+	  );
+	  
+  db_add_field('user_contact', 'created', $created_spec);
+  db_add_field('user_contact', 'changed', $changed_spec);
+}

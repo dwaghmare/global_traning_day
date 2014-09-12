@@ -1,0 +1,4 @@
+[Thu Sep 11 11:56:16.436424 2014] [ssl:warn] [pid 7064:tid 376] AH01909: RSA certificate configured for dev.drupal-traning-day.com:443 does NOT include an ID which matches the server name
+[Thu Sep 11 11:56:17.006082 2014] [ssl:warn] [pid 7064:tid 376] AH01909: RSA certificate configured for dev.drupal-traning-day.com:443 does NOT include an ID which matches the server name
+[Thu Sep 11 11:56:17.585734 2014] [ssl:warn] [pid 6376:tid 388] AH01909: RSA certificate configured for dev.drupal-traning-day.com:443 does NOT include an ID which matches the server name
+[Thu Sep 11 11:56:17.985494 2014] [ssl:warn] [pid 6376:tid 388] AH01909: RSA certificate configured for dev.drupal-traning-day.com:443 does NOT include an ID which matches the server name

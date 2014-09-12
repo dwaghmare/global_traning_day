@@ -1,0 +1,27 @@
+[Thu Sep 11 12:23:39.988244 2014] [proxy:error] [pid 6376:tid 1892] (OS 10061)No connection could be made because the target machine actively refused it.  : AH00957: AJP: attempt to connect to 127.0.0.1:8009 (127.0.0.1) failed
+[Thu Sep 11 12:23:39.988244 2014] [proxy:error] [pid 6376:tid 1892] AH00959: ap_proxy_connect_backend disabling worker for (127.0.0.1) for 5s
+[Thu Sep 11 12:23:39.988244 2014] [proxy_ajp:error] [pid 6376:tid 1892] [client 127.0.0.1:56396] AH00896: failed to make connection to backend: 127.0.0.1, referer: http://dev.drupal-traning-day.com/
+[Thu Sep 11 12:23:43.986244 2014] [proxy:error] [pid 6376:tid 1856] AH00940: AJP: disabled connection for (127.0.0.1)
+[Thu Sep 11 12:23:58.891244 2014] [proxy:error] [pid 6376:tid 1856] (OS 10061)No connection could be made because the target machine actively refused it.  : AH00957: AJP: attempt to connect to 127.0.0.1:8009 (127.0.0.1) failed
+[Thu Sep 11 12:23:58.891244 2014] [proxy:error] [pid 6376:tid 1856] AH00959: ap_proxy_connect_backend disabling worker for (127.0.0.1) for 5s
+[Thu Sep 11 12:23:58.891244 2014] [proxy_ajp:error] [pid 6376:tid 1856] [client 127.0.0.1:56413] AH00896: failed to make connection to backend: 127.0.0.1, referer: http://dev.drupal-traning-day.com/custom-page
+[Thu Sep 11 12:24:02.520244 2014] [proxy:error] [pid 6376:tid 1856] AH00940: AJP: disabled connection for (127.0.0.1)
+[Thu Sep 11 12:24:07.735244 2014] [proxy:error] [pid 6376:tid 1888] (OS 10061)No connection could be made because the target machine actively refused it.  : AH00957: AJP: attempt to connect to 127.0.0.1:8009 (127.0.0.1) failed
+[Thu Sep 11 12:24:07.735244 2014] [proxy:error] [pid 6376:tid 1888] AH00959: ap_proxy_connect_backend disabling worker for (127.0.0.1) for 5s
+[Thu Sep 11 12:24:07.735244 2014] [proxy_ajp:error] [pid 6376:tid 1888] [client 127.0.0.1:56429] AH00896: failed to make connection to backend: 127.0.0.1, referer: http://dev.drupal-traning-day.com/custom-page
+[Thu Sep 11 12:24:14.182244 2014] [proxy:error] [pid 6376:tid 1888] (OS 10061)No connection could be made because the target machine actively refused it.  : AH00957: AJP: attempt to connect to 127.0.0.1:8009 (127.0.0.1) failed
+[Thu Sep 11 12:24:14.182244 2014] [proxy:error] [pid 6376:tid 1888] AH00959: ap_proxy_connect_backend disabling worker for (127.0.0.1) for 5s
+[Thu Sep 11 12:24:14.182244 2014] [proxy_ajp:error] [pid 6376:tid 1888] [client 127.0.0.1:56434] AH00896: failed to make connection to backend: 127.0.0.1, referer: http://dev.drupal-traning-day.com/custom-page
+[Thu Sep 11 12:24:22.190244 2014] [proxy:error] [pid 6376:tid 1888] (OS 10061)No connection could be made because the target machine actively refused it.  : AH00957: AJP: attempt to connect to 127.0.0.1:8009 (127.0.0.1) failed
+[Thu Sep 11 12:24:22.190244 2014] [proxy:error] [pid 6376:tid 1888] AH00959: ap_proxy_connect_backend disabling worker for (127.0.0.1) for 5s
+[Thu Sep 11 12:24:22.190244 2014] [proxy_ajp:error] [pid 6376:tid 1888] [client 127.0.0.1:56439] AH00896: failed to make connection to backend: 127.0.0.1, referer: http://dev.drupal-traning-day.com/custom-page
+[Thu Sep 11 12:26:08.816244 2014] [proxy:error] [pid 6376:tid 1892] (OS 10061)No connection could be made because the target machine actively refused it.  : AH00957: AJP: attempt to connect to 127.0.0.1:8009 (127.0.0.1) failed
+[Thu Sep 11 12:26:08.816244 2014] [proxy:error] [pid 6376:tid 1892] AH00959: ap_proxy_connect_backend disabling worker for (127.0.0.1) for 5s
+[Thu Sep 11 12:26:08.816244 2014] [proxy_ajp:error] [pid 6376:tid 1892] [client 127.0.0.1:56493] AH00896: failed to make connection to backend: 127.0.0.1, referer: http://dev.drupal-traning-day.com/
+[Thu Sep 11 12:26:11.722244 2014] [proxy:error] [pid 6376:tid 1856] AH00940: AJP: disabled connection for (127.0.0.1)
+[Thu Sep 11 13:00:50.580244 2014] [proxy:error] [pid 6376:tid 1852] (OS 10061)No connection could be made because the target machine actively refused it.  : AH00957: AJP: attempt to connect to 127.0.0.1:8009 (127.0.0.1) failed
+[Thu Sep 11 13:00:50.580244 2014] [proxy:error] [pid 6376:tid 1852] AH00959: ap_proxy_connect_backend disabling worker for (127.0.0.1) for 5s
+[Thu Sep 11 13:00:50.580244 2014] [proxy_ajp:error] [pid 6376:tid 1852] [client 127.0.0.1:56652] AH00896: failed to make connection to backend: 127.0.0.1, referer: http://dev.drupal-traning-day.com/
+[Thu Sep 11 16:14:31.748244 2014] [proxy:error] [pid 6376:tid 1888] (OS 10061)No connection could be made because the target machine actively refused it.  : AH00957: AJP: attempt to connect to 127.0.0.1:8009 (127.0.0.1) failed
+[Thu Sep 11 16:14:31.748244 2014] [proxy:error] [pid 6376:tid 1888] AH00959: ap_proxy_connect_backend disabling worker for (127.0.0.1) for 5s
+[Thu Sep 11 16:14:31.748244 2014] [proxy_ajp:error] [pid 6376:tid 1888] [client 127.0.0.1:57496] AH00896: failed to make connection to backend: 127.0.0.1, referer: http://dev.drupal-traning-day.com/

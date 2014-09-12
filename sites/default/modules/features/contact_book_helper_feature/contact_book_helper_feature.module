@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Contact Book helper Feature feature.
+ */
+
+include_once 'contact_book_helper_feature.features.inc';

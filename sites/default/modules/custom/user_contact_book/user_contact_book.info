@@ -1,0 +1,27 @@
+name = User Contact Book
+description = "User Contact Book is custom module using Entity API to provide CRUD operation on Contacts" 
+core = 7.x
+package = User Extra Features
+version = 1.0
+configure = admin/user_contact_book
+
+dependencies[] = date_api
+dependencies[] = date
+dependencies[] = entity
+dependencies[] = email
+dependencies[] = image
+dependencies[] = taxonomy
+dependencies[] = text
+dependencies[] = variable
+dependencies[] = views
+
+files[] = user_contact_book.module
+files[] = class/user_contact.class.inc
+files[] = class/user_contact.controller.class.inc
+files[] = class/user_contact.uicontroller.class.inc
+files[] = user_contact_book.admin.inc
+
+;files[] = user_contact_book.contact.view.inc
+;files[] = user_contact_book.contact.add.inc
+;files[] = user_contact_book.contact.edit.inc
+;files[] = user_contact_book.contact.delete.inc

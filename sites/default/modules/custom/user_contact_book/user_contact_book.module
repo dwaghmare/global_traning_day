@@ -1,0 +1,377 @@
+<?php
+
+module_load_include('inc', 'user_contact', 'user_contact_book.admin');
+
+/**
+ * Implement init hook
+ */
+
+function user_contact_book_init() {
+  debug_backtrace();
+}
+
+function user_contact_book_entity_info() {
+  $info['user_contact'] = array(
+    'label'            => t('User Contact book'),
+	'entity class' => 'UserContact',
+    'controller class' => 'UserContactController',
+    'base table'       => 'user_contact',
+    'fieldable'        => TRUE,
+    'entity keys' => array(
+      'id' => 'cid',
+      'label' => 'Contact title',
+    ),	
+    'exportable' => TRUE,
+	'label callback' => 'user_contact_label_callback',
+	'uri callback' => 'entity_class_uri',
+	'access callback' => 'user_contact_access',
+    'admin ui' => array(
+      'path' => 'admin/contactbook/user_contact',      
+	  'controller class' => 'UserContactEntityUIController',
+      'menu wildcard' => '%user_contact',
+      'file' => 'user_contact_book.admin.inc',
+    ),
+	/*
+	'bundle keys'      => array(
+      'bundle' => 'bundle',
+    ),
+	*/
+    //'load hook'        => 'contact_load',
+    //'static cache'     => TRUE,
+    'module' => 'user_contact_book',
+    'views controller class' => 'EntityDefaultViewsController',
+
+    /*
+	'bundles'          => array(
+      'contact' => array(
+        'label' => 'User Contact',
+        'admin' => array(
+          'path'             => 'admin/structure/user_contact_book',
+          'access arguments' => array('administer user contact book'),
+        ),
+      ),
+    ),
+    'view modes'       => array(
+      'full' => array(
+        'label'           => t('Full User Contact'),
+        'custom settings' => FALSE,
+      ),
+    )
+	*/
+  );
+
+  return $info;
+}
+
+
+/**
+ * Implements of hook_entity_info();
+ *
+ * - Entity is a 'user_contact'
+ * - Entity bundle is 'contact'
+ *
+ * @return mixed
+ */
+
+function user_contact_book_menu() {
+  $items = array();
+  
+  //debug_backtrace(); exit();
+  
+  $items['admin/contactbook'] = array(
+    'title' => 'User Contact Book',
+    'description' => 'User Contact Book Links',
+    'position' => 'right',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('access administration pages'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    'weight' => 0,
+  );  
+
+  //entity related menu callbacks
+  $items['usercontacts/%user_contact'] = array(
+    'title callback' => 'user_contact_view_title',
+    'title arguments' => array(1),
+    'page callback' => 'user_contact_view_entity',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+
+  // Make "listing" the main tab
+  $items['usercontacts/%user_contact/view'] = array(
+    'title' => 'View',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+
+
+  // Make an additional tab called "Create"
+  $items['usercontacts/%user_contact/mycontacts'] = array(
+    'title' => 'My Contacts',
+    'page callback' => 'addressbook_mycontacts',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),  //user_access();
+    'type' => MENU_LOCAL_TASK,
+  );
+  
+  // Make an additional tab called "Create"
+  $items['user/%user/mycontacts'] = array(
+    'title' => 'My Contacts',
+    'page callback' => 'addressbook_mycontacts',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),  //user_access();	
+    'type' => MENU_LOCAL_TASK,
+  );  
+ 
+   // Make an additional tab called "Create"
+  $items['user/%user/addcontact'] = array(
+    'title' => t('Add Contact'),
+    'description' => t('Add new contact'),
+    'page callback' => 'user_contact_book_page',    
+    'access arguments' => array('access content'),  
+    'type' => MENU_LOCAL_TASK,
+  ); 
+  
+  return $items;	
+}  
+ 
+function user_contact_book_page() {
+  return array(
+  'my_content' => array(
+    '#type' => 'markup',
+    '#markup' => 'Some markup',
+   ),
+   'my_form' => drupal_get_form("user_contact_form"),
+  );  
+} 
+
+function user_contact_view_title($user_contact) {
+  return 'Welcome ' . $user_contact->first_name;
+}
+
+function addressbook_mycontacts($user_contact) {
+	return 'My Contact list For user "' . $user_contact->first_name . '"';
+}
+
+/**
+
+ * Implements hook_permission().
+ */
+function user_contact_book_permission() {
+  $permissions = array(
+    'administer user contact administrator' => array(
+      'title' => t('administer user contact administrator'),
+      'description' => t('Add/Edit user contact.'),
+    ),
+	'administer addressbook' =>  array(
+      'title' => t('Administer Address Book'),
+      'description' => t('Give administer access'),
+      'restrict access' => TRUE,
+      'warning' => t('Warning: Give Access to only trusted roles.')
+    ),	
+  );
+  return $permissions;
+}
+
+function user_contact_access($op, $user_contact = NULL, $account = NULL) {
+  if (user_access('administer user contact administrator', $account)) {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+function user_contact_load($cid, $reset = FALSE) {
+  $cids = (isset($cid) ? array($cid) : array());
+  $user_contact = user_contact_load_multiple($cids);
+  return $user_contact ? reset($user_contact) : FALSE;
+}
+
+function user_contact_load_multiple($cids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('user_contact', $cids, $conditions, $reset);
+}
+
+function user_contact_delete(user_contact$user_contact) {
+  $user_contact->delete();
+}
+
+function user_contact_create($values = array()) {
+  return entity_get_controller('user_contact')->create($values);
+}
+
+function user_contact_save(UserContact$user_contact) {
+  return $user_contact->save();
+}
+
+function user_contact_label_callback($user_contact, $type) {
+  return !empty($user_contact->title) ? $user_contact->title : '';
+}
+
+function user_contact_page_title(UserContact$user_contact) {
+  return $user_contact->title;
+}
+
+function user_contact_view_entity($contact) {
+	global $user;
+
+  $contact->content['cid'] = array(
+    '#type' => 'item',
+    '#title' => t('Contact ID: '),
+    '#markup' => "<a href='/taxonomy/term/$contact->cid' target='_blank'>" . $contact->cid . "</a>",
+  );
+
+  $contact->content['first_name'] = array(
+    '#type' => 'item',
+    '#title' => t('Contact First Name: '),
+    '#markup' => $contact->first_name,
+  );
+  
+  $contact->content['last_name'] = array(
+    '#type' => 'item',
+    '#title' => t('Contact Last Name: '),
+    '#markup' => $contact->last_name,
+  ); 
+  
+  $contact->content['email'] = array(
+    '#type' => 'item',
+    '#title' => t('Contact email: '),
+    '#markup' => $contact->email,
+  );   
+  
+  $contact->content['mobile'] = array(
+    '#type' => 'item',
+    '#title' => t('Contact mobile: '),
+    '#markup' => $contact->mobile,
+  ); 
+
+  $contact->content['phone'] = array(
+    '#type' => 'item',
+    '#title' => t('Contact phone: '),
+    '#markup' => $contact->phone,
+  ); 
+
+  if($contact->terms_and_cond == 1){
+	$status = "Accepted";
+  }else{
+    $status = "Pending";
+  }
+  $contact->content['terms_and_cond'] = array(
+    '#type' => 'item',
+    '#title' => t('Contact terms and cond: '),
+    '#markup' => $status,
+  );  
+  
+  $contact->content['uid'] = array(
+    '#type' => 'item',
+    '#title' => t('Contact terms and cond: '),
+    '#markup' => "<a href='/user/$user->uid' target='_blank'>" . $user->name . "</a>",
+  );
+
+  $contact->content['created'] = array(
+    '#type' => 'item',
+    '#title' => t('Vendor created on: '),
+    '#markup' => format_date($contact->created),
+  );
+
+  $contact->content['changed'] = array(
+    '#type' => 'item',
+    '#title' => t('Vendor Updated on: '),
+    '#markup' => format_date($contact->changed),
+  );
+
+
+  return $contact->content;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function user_contact_book_block_info() {
+  $blocks = array();
+  $blocks['user_contact_list'] = array(
+    'info' => t('User contact Book List'),
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function user_contact_book_block_view($delta = '') {
+  $block = array();
+
+  switch($delta) {
+    case 'user_contact_list' :
+      $block['subject'] = '';
+      $block['content'] = user_contact_book_list_display();
+    break;
+ }
+  return $block;
+}
+
+/**
+ * call back function to displat addess list.
+ *
+ * returns a themed output list
+ */
+function user_contact_book_list_display() {
+  global $user;
+  
+  $contacts_list = user_contact_contact_list_by_uid($user->uid);
+  return theme( 'user_contacts_book_block_tpl', array('contacts_list' => $contacts_list));
+}
+
+/*
+ * Implements hook_theme().
+*/
+function user_contact_book_theme() {
+  $themes = array(
+    'user_contacts_book_block_tpl' => array(
+      'template' => 'user_contact_book_list_block',
+      'arguments' => array(),
+    ),
+  );
+  return $themes;
+}
+
+/**
+ * retrives a list of address from db.
+ *
+ * returns $data
+ */
+function user_contact_contact_list_by_uid($uid) {
+  $contact_result = array();
+  if ($uid > 0) {
+    $query = db_select('user_contact', 'uc');
+    $query->fields('uc', array('type', 'cid', 'first_name','last_name'));
+    $query->condition('uc.uid', $uid);    
+    $contact_result = $query->execute();
+  }
+
+  return $contact_result;
+}
+
+/**
+* Menu Callback Code
+**/
+/**
+ * Page callback for addressbook listing
+ */
+function addressbook_listing() {
+  return 'Addressbook Listing';
+}
+
+
+/**
+ * Page callback for addressbook create page
+ */
+function addressbook_create() {
+  return 'Create Form';
+}
+
+
+
+class UserContactEntityUIController extends EntityDefaultUIController {}
